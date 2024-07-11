@@ -11,17 +11,21 @@ namespace SnakeCodeClean
     {
         static void Main(string[] args)
         {
-            Console.WindowHeight = 16;
-            Console.WindowWidth = 32;
-            int screenwidth = Console.WindowWidth;
-            int screenheight = Console.WindowHeight;
-            Random randomnummer = new Random();
-            int score = 5;
-            int gameover = 0;
-            pixel hoofd = new pixel();
-            hoofd.xpos = screenwidth / 2;
-            hoofd.ypos = screenheight / 2;
-            hoofd.schermkleur = ConsoleColor.Red;
+            // Sets console window size
+            // Note: only works in Windows 10 or lower
+            Console.SetWindowSize(32, 16);
+
+            Game gameInstance = new Game(Console.WindowWidth, Console.WindowHeight);
+
+            //int screenwidth = Console.WindowWidth;
+            //int screenheight = Console.WindowHeight;
+            //Random randomnummer = new Random();
+
+            //int score = 5;
+            //int gameover = 0;
+
+            Pixel hoofd = new Pixel(screenwidth / 2, screenheight / 2);
+            hoofd.Color = ConsoleColor.Red;
             string movement = "RIGHT";
             List<int> xposlijf = new List<int>();
             List<int> yposlijf = new List<int>();
@@ -33,7 +37,7 @@ namespace SnakeCodeClean
             while (true)
             {
                 Console.Clear();
-                if (hoofd.xpos == screenwidth - 1 || hoofd.xpos == 0 || hoofd.ypos == screenheight - 1 || hoofd.ypos == 0)
+                if (hoofd.X == screenwidth - 1 || hoofd.X == 0 || hoofd.Y == screenheight - 1 || hoofd.Y == 0)
                 {
                     gameover = 1;
                 }
@@ -58,7 +62,7 @@ namespace SnakeCodeClean
                     Console.Write("■");
                 }
                 Console.ForegroundColor = ConsoleColor.Green;
-                if (berryx == hoofd.xpos && berryy == hoofd.ypos)
+                if (berryx == hoofd.X && berryy == hoofd.X)
                 {
                     score++;
                     berryx = randomnummer.Next(1, screenwidth - 2);
@@ -68,7 +72,7 @@ namespace SnakeCodeClean
                 {
                     Console.SetCursorPosition(xposlijf[i], yposlijf[i]);
                     Console.Write("■");
-                    if (xposlijf[i] == hoofd.xpos && yposlijf[i] == hoofd.ypos)
+                    if (xposlijf[i] == hoofd.X && yposlijf[i] == hoofd.Y)
                     {
                         gameover = 1;
                     }
@@ -77,8 +81,8 @@ namespace SnakeCodeClean
                 {
                     break;
                 }
-                Console.SetCursorPosition(hoofd.xpos, hoofd.ypos);
-                Console.ForegroundColor = hoofd.schermkleur;
+                Console.SetCursorPosition(hoofd.X, hoofd.Y);
+                Console.ForegroundColor = hoofd.Color;
                 Console.Write("■");
                 Console.SetCursorPosition(berryx, berryy);
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -115,21 +119,21 @@ namespace SnakeCodeClean
                         }
                     }
                 }
-                xposlijf.Add(hoofd.xpos);
-                yposlijf.Add(hoofd.ypos);
+                xposlijf.Add(hoofd.X);
+                yposlijf.Add(hoofd.Y);
                 switch (movement)
                 {
                     case "UP":
-                        hoofd.ypos--;
+                        hoofd.Y--;
                         break;
                     case "DOWN":
-                        hoofd.ypos++;
+                        hoofd.Y++;
                         break;
                     case "LEFT":
-                        hoofd.xpos--;
+                        hoofd.X--;
                         break;
                     case "RIGHT":
-                        hoofd.xpos++;
+                        hoofd.X++;
                         break;
                 }
                 if (xposlijf.Count() > score)
@@ -144,10 +148,10 @@ namespace SnakeCodeClean
         }
     }
 
-    class pixel
-    {
-        public int xpos { get; set; }
-        public int ypos { get; set; }
-        public ConsoleColor schermkleur { get; set; }
-    }
+    //class pixel
+    //{
+    //    public int xpos { get; set; }
+    //    public int ypos { get; set; }
+    //    public ConsoleColor Color { get; set; }
+    //}
 }
