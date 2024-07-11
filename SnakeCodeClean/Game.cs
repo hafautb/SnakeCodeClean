@@ -69,7 +69,7 @@ namespace SnakeCodeClean
                 DateTime playerActionStartTime = DateTime.Now;
                 TimeSpan playerActionTimeLength = new TimeSpan(0);
 
-                while (TimeSpan.Compare(TimeSpan.FromMilliseconds(100), playerActionTimeLength) > 0) {
+                while (TimeSpan.Compare(TimeSpan.FromMilliseconds(500), playerActionTimeLength) > 0) {
                     Movement? playerAction = Controls.readPlayerInput();
                     if (playerAction != null)
                     {
